@@ -5,22 +5,16 @@ int dig(Maze* maze, Point point);
 bool checkIfPossibleToDig(Maze* maze, Point point);
 char* possiblePossitionsToDig(Maze* maze, Point point);
 
-Maze* createMaze(int height, int width, Point start, Point end){
+Maze* createMaze(int height, int width, Point start, Point end, unsigned int seed){
     Maze* maze = (Maze*) malloc(sizeof(Maze));
     maze->height = height;
     maze->width = width;
     maze->start = start;
     maze->end = end;
     maze->board = (char*)malloc(maze->height * maze->width * sizeof(char*));
-    digmaze(maze);
+    maze->seed = seed;
+    digMaze(maze);
     return maze;
-}
-
-int get1dIndex(Maze* maze, Point point){
-    if ((point.x < 0) || (point.x > maze->width) || (point.y < 0) || (point.y > maze->height)){
-        return -1;
-    }
-    return ((point.y * maze->width)+point.x); // y * (number of columns) + x
 }
 
 void digMaze(Maze* maze){
@@ -41,10 +35,48 @@ void digMaze(Maze* maze){
             }
         }
     }
+    setSeed(maze->seed);
     dig(maze, maze->start);
 }
 
 int dig(Maze* maze, Point point){
+    if (
+        (maze->board[get1dIndex(maze, point)] != AIR) &&
+        (maze->board[get1dIndex(maze, point)] != START)
+        ){
+        return 1;
+    }
+    char* possibleDir = NULL;
+    int sizeOfpossibleDir = 0;
+    possibleDir = possiblePossitionsToDig(maze, point);
+    sizeOfpossibleDir = strlen(possibleDir);
+    if (sizeOfpossibleDir != 0){
+        char dir = possibleDir[getRandomNumber(sizeOfpossibleDir)];
+        Point dirPoint;
+        switch (dir){
+            case 'E':
+                dirPoint.x = 1;
+                dirPoint.y = 0;
+                break;
+            case 'S':
+                dirPoint.x = 0;
+                dirPoint.y = -1;
+                break;
+            case 'W':
+                dirPoint.x = -1;
+                dirPoint.y = 0;
+                break;
+            case 'N':
+                dirPoint.x = 0;
+                dirPoint.y = 1;
+                break;
+            case '\0':
+                break;
+        }
+        maze->board[get1dIndex(maze, point)] = AIR;
+        return dig(maze, nxtPointInDir(point, dirPoint));
+    }
+    free(possibleDir);
     return 0;
 }
 
@@ -65,7 +97,10 @@ char* possiblePossitionsToDig(Maze* maze, Point point){
     int i, index, strIndex = 0;
     for (i = 0; i < 4; i++){
         index = get1dIndex(maze, adjecentPoints[i]);
-        if (maze->board[index] != WALL){
+        if (
+            (maze->board[index] != WALL) &&
+            (maze->board[index] != AIR)
+            ){
             index = get1dIndex(maze, nxtPointInDir(adjecentPoints[i], dir[i]));
             if (maze->board[index] != AIR){
                 switch (i){
@@ -83,15 +118,28 @@ char* possiblePossitionsToDig(Maze* maze, Point point){
                         break;
                 }
                 strIndex++;
-                //if (
-                //    !isEqualPoints(nxtPointInDir(adjecentPoints[i], dir[i]), maze->start) &&
-                //    !isEqualPoints(nxtPointInDir(adjecentPoints[i], dir[i]), maze->end)
-                //){
-                //
-                //}
             }
         }
     }
     possiblePoints[strIndex] = '\0';
     return possiblePoints;
+}
+
+void printMaze(Maze* maze){
+    int x, y;
+    Point point;
+    for (x = 0; x < maze->width; x++){
+        point.x = x;
+        for (y = 0; y < maze->height; y++){
+            point.y = y;
+            printf("%c", maze->board[get1dIndex(maze, point)]);
+        }
+        printf("\n");
+    }
+}
+
+void deleteMaze(Maze* maze){
+    free(maze->board);
+    free(maze);
+    maze = NULL;
 }
