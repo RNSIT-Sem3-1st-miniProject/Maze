@@ -9,7 +9,7 @@ Point* createPoint(int x, int y){
 }
 
 void printPoint(Point* point){
-    printf("(%d, %d)\n", point->x, point->y);
+    printf("(%d, %d), ", point->x, point->y);
 }
 
 void setSeed(unsigned int seed){
@@ -33,3 +33,11 @@ int get1dIndex(Maze* maze, Point point){
     }
     return ((point.y * maze->width)+point.x); // y * (number of columns) + x
 }
+
+bool isEqualPoints(Point this, Point other){
+    if ((this.x == other.x) && (this.y == other.y)){
+        return true;
+    }
+    return false;
+}
+

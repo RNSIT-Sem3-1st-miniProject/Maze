@@ -14,15 +14,14 @@
 #define END '}'
 #define PATH '.'
 
-typedef struct error{
-    int errorCode;
-    char* errorInfo;
-}ERROR;
-
 typedef struct Project{
     bool DEBUG;
-    ERROR* errorLog;
+    //ErrorList* errorList;
 }PROJECT_STATE;
+
+bool isDebugOn();
+
+
 
 void setSeed(unsigned int seed);
 int getRandomNumber(int max);
