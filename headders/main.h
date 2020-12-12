@@ -21,7 +21,10 @@ typedef struct Project{
 
 bool isDebugOn();
 
-
+// testing this files
+#define readBuffer 128
+char* readFile(char* fileName);
+void writeFile(char* fileName, char* data);
 
 void setSeed(unsigned int seed);
 int getRandomNumber(int max);

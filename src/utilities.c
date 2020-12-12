@@ -41,3 +41,41 @@ bool isEqualPoints(Point this, Point other){
     return false;
 }
 
+
+// testing files
+
+char* readFile(char* fileName){
+    FILE *file = fopen(fileName, "r");
+    char* data = NULL;
+    char* buffer = NULL;
+    do{
+        // reset buffer
+        if (buffer != NULL){
+            free(buffer);
+            buffer = NULL;
+        }
+        // set buffer mem
+        buffer = (char*) malloc(sizeof(char) * (readBuffer));
+        fgets(buffer, readBuffer, file);
+        if (strlen(buffer) != 0){
+            if (data != NULL){
+                data = (char*) realloc(data, sizeof(char) * (strlen(data) + strlen(buffer)) );
+            }else{
+                data = (char*) malloc(sizeof(char) * strlen(buffer) );
+            }
+            strcat(data, buffer);
+        }
+    }while(strlen(buffer)!= 0);
+    if (data[strlen(data)] != '\0'){
+        data = (char*) realloc(data, sizeof(char) * (strlen(data) + 1) );
+        data[strlen(data)+1] = '\0';
+    }
+    fclose(file);
+    return data;
+}
+
+void writeFile(char* fileName, char* data){
+    FILE *file = fopen(fileName, "w");
+    fprintf(file, data);
+    fclose(file);
+}
