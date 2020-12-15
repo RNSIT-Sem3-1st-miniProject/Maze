@@ -13,6 +13,7 @@
 #define START '{'
 #define END '}'
 #define PATH '.'
+#define PLAYER '$'
 
 typedef struct Project{
     bool DEBUG;
@@ -51,6 +52,11 @@ int get1dIndex(Maze* maze, Point point);
 Point get2dPoint(Maze* maze, int index);
 void digMaze(Maze* maze);
 void deleteMaze(Maze* maze);
+
+
+//functions written by suprith
+
+int movement(Maze * , Point);
 
 /*typedef struct Player{
 }Player;
