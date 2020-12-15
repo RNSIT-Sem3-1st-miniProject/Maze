@@ -6,7 +6,7 @@ int movement(Maze *maze , Point startPoint)
     curpoint = startPoint;
     char input;
     int index;
-    printf("w-up\t d-right\t s-down\t a-left\t q-quit");
+    printf("w-up\t d-right\t s-down\t a-left\t q-quit\n");
     while(1)
     {
         if(get1dIndex(maze,curpoint) == -1)
@@ -14,6 +14,7 @@ int movement(Maze *maze , Point startPoint)
             printf("Sorry something went wrong!\n");
             return -1;
         }
+        maze->board[get1dIndex(maze,curpoint)] = PLAYER;
         input = getchar();
         switch(input)
         {
@@ -29,7 +30,6 @@ int movement(Maze *maze , Point startPoint)
                             maze->board[get1dIndex(maze,curpoint)] = AIR;
                             maze->board[index] = PLAYER;
                             curpoint = nextpoint;
-                            printMaze(maze);
                         }
                        break;
                     }
@@ -45,7 +45,6 @@ int movement(Maze *maze , Point startPoint)
                             maze->board[get1dIndex(maze,curpoint)] = AIR;
                             maze->board[index] = PLAYER;
                             curpoint = nextpoint;
-                            printMaze(maze);
                         }
                        break;
                     }         
@@ -61,7 +60,6 @@ int movement(Maze *maze , Point startPoint)
                             maze->board[get1dIndex(maze,curpoint)] = AIR;
                             maze->board[index] = PLAYER;
                             curpoint = nextpoint;
-                            printMaze(maze);
                         }
                        break;
                     } 
@@ -77,19 +75,19 @@ int movement(Maze *maze , Point startPoint)
                             maze->board[get1dIndex(maze,curpoint)] = AIR;
                             maze->board[index] = PLAYER;
                             curpoint = nextpoint;
-                            printMaze(maze);
                         }
                        break;       
                     }  
             case 'q':{
                         char ch;
                         printf("Do you really want to quit and get the solution(y or n)?");
+                        getchar();
                         ch = getchar();
                         switch(ch)
                         {
                             case 'y':{
                                         //solution function
-                                        break;
+                                        return 1;
                                     }
                             case 'n':{
                                         continue;
@@ -98,6 +96,8 @@ int movement(Maze *maze , Point startPoint)
                         }
                     } 
         }
+        system("clear");
+        printMaze(maze);
     }
 }
     
