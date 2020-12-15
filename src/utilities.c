@@ -61,7 +61,7 @@ char getDirChar(Point point){
         return 'E';
     }
     if (isEqualPoints(point, (Point){-1, 0})){
-        return 'E';
+        return 'W';
     }
 }
 

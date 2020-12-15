@@ -1,7 +1,7 @@
 
 #include "../headders/main.h"
 
-PROJECT_STATE state = {true};
+PROJECT_STATE state = {false};
 
 int main(){
     int width, height;

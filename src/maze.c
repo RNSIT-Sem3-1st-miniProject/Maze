@@ -78,7 +78,7 @@ int dig(Maze* maze, Point point){
                 break;
             case 'S':
                 dirPoint.x = 0;
-                dirPoint.y = -1;
+                dirPoint.y = 1;
                 break;
             case 'W':
                 dirPoint.x = -1;
@@ -86,7 +86,7 @@ int dig(Maze* maze, Point point){
                 break;
             case 'N':
                 dirPoint.x = 0;
-                dirPoint.y = 1;
+                dirPoint.y = -1;
                 break;
             default:
                 dirPoint.x = -1;
@@ -94,7 +94,7 @@ int dig(Maze* maze, Point point){
                 break;
         }
         if (isDebugOn()){
-            printf("%c : ", dir);
+            printf("%c : %c : ", dir, getDirChar(dirPoint));
             printPoint(&dirPoint);
             printf("\n");
         }
@@ -162,22 +162,18 @@ char* possiblePossitionsToDig(Maze* maze, Point point){
                 (adjIndex != -1) &&
                 (maze->board[adjIndex] != AIR)
             ){
-                if (isDebugOn()){
-                    printf("%c : ", dirToCheck[dirIndex]);
-                    printPoint(&adjDigPoints[adjLoop]);
-                    printf("\n");
-                }
-                set[adjIndex] = true;
+                set[adjLoop] = true;
             }
-            printf("%d\n", adjIndex);
         }
-        printf("hii\n");
         if (
             (set[0] == true) &&
             (set[1] == true) &&
-            (set[2] == true)
+            (set[2] == true) &&
+            (index != -1) &&
+            (maze->board[index] != WALL) &&
+            (maze->board[index] != START) &&
+            (maze->board[index] != END)
         ){
-            printf("set %c : \n", dirToCheck[dirIndex]);
             possiblePoints[strIndex] = dirToCheck[dirIndex];
             ++strIndex;
         }
@@ -200,6 +196,9 @@ void printMaze(Maze* maze){
             printf("%c", maze->board[get1dIndex(maze, point)]);
         }
         printf("\n");
+    }
+    if (isDebugOn()){
+        printf("%s\n", maze->board);
     }
 }
 
