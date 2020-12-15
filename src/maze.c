@@ -40,6 +40,7 @@ void digMaze(Maze* maze){
         }
     }
     setSeed(maze->seed);
+    //printf("\ncalling dig\n");
     int digResult = dig(maze, maze->start);
     if (isDebugOn()){
         // 
@@ -77,7 +78,7 @@ int dig(Maze* maze, Point point){
                 break;
             case 'S':
                 dirPoint.x = 0;
-                dirPoint.y = -1;
+                dirPoint.y = 1;
                 break;
             case 'W':
                 dirPoint.x = -1;
@@ -85,7 +86,7 @@ int dig(Maze* maze, Point point){
                 break;
             case 'N':
                 dirPoint.x = 0;
-                dirPoint.y = 1;
+                dirPoint.y = -1;
                 break;
             default:
                 dirPoint.x = -1;
@@ -93,7 +94,7 @@ int dig(Maze* maze, Point point){
                 break;
         }
         if (isDebugOn()){
-            printf("%c : ", dir);
+            printf("%c : %c : ", dir, getDirChar(dirPoint));
             printPoint(&dirPoint);
             printf("\n");
         }
@@ -101,57 +102,84 @@ int dig(Maze* maze, Point point){
         if (isEqualPoints(dirPoint, pt)){
             return -1;
         }
-        maze->board[get1dIndex(maze, nxtPointInDir(point, dirPoint))] = AIR;
-        return dig(maze, nxtPointInDir(point, dirPoint));
+        Point nxtPoint = nxtPointInDir(point, dirPoint);
+        if (get1dIndex(maze, nxtPoint) != -1){
+            maze->board[get1dIndex(maze, nxtPoint)] = AIR;
+            return dig(maze, nxtPoint);
+        }
     }
     free(possibleDir);
     return 0;
 }
 
 char* possiblePossitionsToDig(Maze* maze, Point point){
-    char* possiblePoints = (char*)malloc(5 * sizeof(char));
-    Point adjecentPoints[] = {
-        {point.x + 1, point.y},
-        {point.x, point.y - 1},
-        {point.x - 1, point.y},
-        {point.x, point.y + 1}
-    };
-    Point dir[] = {
-        {1, 0},
-        {0, -1},
-        {-1, 0},
-        {0, 1}
-    };
-    int i, index, strIndex = 0;
-    for (i = 0; i < 4; i++){
-        index = get1dIndex(maze, adjecentPoints[i]);
-        if (
+    char* possiblePoints = (char*) malloc(5 * sizeof(char));
+    char dirToCheck[] = "NSEW";
+    Point adjDigPoints[3];
+    Point digPoint;
+    int dirIndex, index, strIndex = 0, adjIndex, adjLoop;
+    for (dirIndex = 0; dirIndex < 4; dirIndex++){
+        digPoint = nxtPointInDir(point, getDirPoint(dirToCheck[dirIndex]) );
+        index = get1dIndex(maze, digPoint);
+        if(
+            (index != -1) &&
             (maze->board[index] != WALL) &&
             (maze->board[index] != AIR) &&
             (maze->board[index] != START) &&
-            (maze->board[index] != END) 
-            ){
-            index = get1dIndex(maze, nxtPointInDir(adjecentPoints[i], dir[i]));
-            if (maze->board[index] != AIR){
-                switch (i){
-                    case 0:
-                        possiblePoints[strIndex] = 'E';
-                        break;
-                    case 1:
-                        possiblePoints[strIndex] = 'S';
-                        break;
-                    case 2:
-                        possiblePoints[strIndex] = 'W';
-                        break;
-                    case 3:
-                        possiblePoints[strIndex] = 'N';
-                        break;
+            (maze->board[index] != END)
+        ){
+            switch (dirToCheck[dirIndex]){
+                case 'N':{
+                    adjDigPoints[0] = nxtPointInDir(digPoint, getDirPoint('W'));
+                    adjDigPoints[1] = nxtPointInDir(digPoint, getDirPoint('N'));
+                    adjDigPoints[2] = nxtPointInDir(digPoint, getDirPoint('E'));
+                    break;
                 }
-                strIndex++;
+                case 'S':{
+                    adjDigPoints[0] = nxtPointInDir(digPoint, getDirPoint('E'));
+                    adjDigPoints[1] = nxtPointInDir(digPoint, getDirPoint('S'));
+                    adjDigPoints[2] = nxtPointInDir(digPoint, getDirPoint('W'));
+                    break;
+                }
+                case 'E':{
+                    adjDigPoints[0] = nxtPointInDir(digPoint, getDirPoint('N'));
+                    adjDigPoints[1] = nxtPointInDir(digPoint, getDirPoint('E'));
+                    adjDigPoints[2] = nxtPointInDir(digPoint, getDirPoint('S'));
+                    break;
+                }
+                case 'W':{
+                    adjDigPoints[0] = nxtPointInDir(digPoint, getDirPoint('S'));
+                    adjDigPoints[1] = nxtPointInDir(digPoint, getDirPoint('W'));
+                    adjDigPoints[2] = nxtPointInDir(digPoint, getDirPoint('N'));
+                    break;
+                }
             }
+        }
+        bool set[] = {false, false, false};
+        for (adjLoop = 0; adjLoop < 3; adjLoop++){
+            adjIndex = get1dIndex(maze, adjDigPoints[adjLoop]);
+            if (
+                (adjIndex != -1) &&
+                (maze->board[adjIndex] != AIR)
+            ){
+                set[adjLoop] = true;
+            }
+        }
+        if (
+            (set[0] == true) &&
+            (set[1] == true) &&
+            (set[2] == true) &&
+            (index != -1) &&
+            (maze->board[index] != WALL) &&
+            (maze->board[index] != START) &&
+            (maze->board[index] != END)
+        ){
+            possiblePoints[strIndex] = dirToCheck[dirIndex];
+            ++strIndex;
         }
     }
     possiblePoints[strIndex] = '\0';
+    printf("%s\n", possiblePoints);
     return possiblePoints;
 }
 
@@ -162,9 +190,15 @@ void printMaze(Maze* maze){
         point.y = y;
         for (x = 0; x < maze->width; x++){
             point.x = x;
+            if(isDebugOn() && false){
+                printPoint(&point);
+            }
             printf("%c", maze->board[get1dIndex(maze, point)]);
         }
         printf("\n");
+    }
+    if (isDebugOn()){
+        printf("%s\n", maze->board);
     }
 }
 
