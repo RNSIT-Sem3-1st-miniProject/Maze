@@ -8,3 +8,7 @@ int main(){
     free(data);
     return 0;
 }
+
+bool isDebugOn(){
+    return false;
+}

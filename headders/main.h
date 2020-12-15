@@ -38,6 +38,9 @@ void printPoint(Point* point);
 Point nxtPointInDir(Point point, Point dir);
 bool isEqualPoints(Point this, Point other);
 
+Point getDirPoint(char dir);
+char getDirChar(Point dir);
+
 typedef struct Maze{
     char* board; // warraped into row-major 2d array
     int width, height;
