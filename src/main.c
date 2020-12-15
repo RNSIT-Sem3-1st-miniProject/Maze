@@ -11,6 +11,7 @@ int main(){
     Point end = {width-1, height-2};
     Maze* maze = createMaze(height, width, start, end, time(NULL));
     printMaze(maze);
+    movement(maze,maze->start);
     deleteMaze(maze);    
     return 0;
 }

@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
+#include<conio.h>
 
 #define AIR ' '
 #define WALL '#'
