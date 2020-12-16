@@ -103,3 +103,10 @@ void writeFile(char* fileName, char* data){
     fprintf(file, data);
     fclose(file);
 }
+
+// doesnot work in linux 
+void pause(float sec){
+    float milisec = 1000 * sec;
+    clock_t start = clock();
+    while(clock() < (start + milisec));
+}

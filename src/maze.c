@@ -48,67 +48,42 @@ void digMaze(Maze* maze){
 }
 
 int dig(Maze* maze, Point point){
-    if (isDebugOn()){
-        printf("dig");
-        printPoint(&point);
-        printf("\n");
-    }
-    if (
-        (maze->board[get1dIndex(maze, point)] != AIR) &&
-        (maze->board[get1dIndex(maze, point)] != START)
-        ){
+    int index = get1dIndex(maze, point);
+    if (index == -1){
+        printf("sorry something went wrong!!");
         return 1;
     }
-
-    char* possibleDir = NULL;
-    int sizeOfpossibleDir = 0;
-    possibleDir = possiblePossitionsToDig(maze, point);
-    sizeOfpossibleDir = strlen(possibleDir);
-    if (isDebugOn()){
-        printf("%s, %d\n", possibleDir, sizeOfpossibleDir);
+    //if (maze->board[index] == END){
+    //    setEndFlag(maze, 1);
+    //}
+    if(
+        (maze->board[index] != AIR) &&
+        (maze->board[index] != START) &&
+        (maze->board[index] != END)
+    ){
+        return 2;
     }
 
-    if (sizeOfpossibleDir != 0){
-        char dir = possibleDir[getRandomNumber(sizeOfpossibleDir -1)];
-        Point dirPoint;
-        switch (dir){
-            case 'E':
-                dirPoint.x = 1;
-                dirPoint.y = 0;
-                break;
-            case 'S':
-                dirPoint.x = 0;
-                dirPoint.y = 1;
-                break;
-            case 'W':
-                dirPoint.x = -1;
-                dirPoint.y = 0;
-                break;
-            case 'N':
-                dirPoint.x = 0;
-                dirPoint.y = -1;
-                break;
-            default:
-                dirPoint.x = -1;
-                dirPoint.y = -1;
-                break;
+    char* possibleDirToDig = NULL, dir;
+    int sizeOfPossibleDir = 0;
+    Point nxtPoint;
+    possibleDirToDig = possiblePossitionsToDig(maze, point);
+    sizeOfPossibleDir = strlen(possibleDirToDig);
+    while (sizeOfPossibleDir != 0){
+        dir = possibleDirToDig[getRandomNumber(sizeOfPossibleDir -1)];
+        free(possibleDirToDig);
+        nxtPoint = nxtPointInDir(point, getDirPoint(dir));
+        maze->board[get1dIndex(maze, nxtPoint)] = AIR;
+        int result = dig(maze, nxtPoint);
+        if (result == 1){
+            return 1;
+        }else if(result == 2){
+            return 2;
         }
-        if (isDebugOn()){
-            printf("%c : %c : ", dir, getDirChar(dirPoint));
-            printPoint(&dirPoint);
-            printf("\n");
-        }
-        Point pt = {-1, -1};
-        if (isEqualPoints(dirPoint, pt)){
-            return -1;
-        }
-        Point nxtPoint = nxtPointInDir(point, dirPoint);
-        if (get1dIndex(maze, nxtPoint) != -1){
-            maze->board[get1dIndex(maze, nxtPoint)] = AIR;
-            return dig(maze, nxtPoint);
-        }
+        possibleDirToDig = possiblePossitionsToDig(maze, point);
+        sizeOfPossibleDir = strlen(possibleDirToDig);
     }
-    free(possibleDir);
+    free(possibleDirToDig);
     return 0;
 }
 
@@ -179,7 +154,6 @@ char* possiblePossitionsToDig(Maze* maze, Point point){
         }
     }
     possiblePoints[strIndex] = '\0';
-    printf("%s\n", possiblePoints);
     return possiblePoints;
 }
 

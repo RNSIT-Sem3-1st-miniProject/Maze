@@ -15,7 +15,7 @@ int movement(Maze *maze , Point startPoint)
             return -1;
         }
         maze->board[get1dIndex(maze,curpoint)] = PLAYER;
-        input = getc(stdin);
+        input = getchar();
         switch(input)
         {
             case 'w': {
@@ -42,7 +42,7 @@ int movement(Maze *maze , Point startPoint)
                         char ch;
                         printf("Do you really want to quit and get the solution(y or n)?");
                         getchar();
-                        ch = getc(stdin);
+                        ch = getchar();
                         switch(ch)
                         {
                             case 'y':{
@@ -74,7 +74,10 @@ int movement(Maze *maze , Point startPoint)
             curpoint = nextpoint;
             //printMaze(maze);
         }
-        system("cls");
+        system("clear"); // comment this line if compiling for windows
+        system("cls"); // comment this line if compiling for linux
+        pause(1);
+        //clrscr();
         printMaze(maze);
     }
 }

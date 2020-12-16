@@ -6,7 +6,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-#include<conio.h>
+//#include<conio.h>
 
 #define AIR ' '
 #define WALL '#'
@@ -30,6 +30,7 @@ void writeFile(char* fileName, char* data);
 
 void setSeed(unsigned int seed);
 int getRandomNumber(int max);
+void pause(float sec);
 
 typedef struct Point{
     int x, y;
@@ -56,7 +57,8 @@ int get1dIndex(Maze* maze, Point point);
 Point get2dPoint(Maze* maze, int index);
 void digMaze(Maze* maze);
 void deleteMaze(Maze* maze);
-
+void setEndFlag(Maze* maze,int state);
+int getEndFlagState(Maze* maze);
 
 //functions written by suprith
 
