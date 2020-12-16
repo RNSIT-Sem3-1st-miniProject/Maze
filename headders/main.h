@@ -6,19 +6,17 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-//#include<conio.h>
 
 #define AIR ' '
 #define WALL '#'
-#define BLOCK '*'
+#define BLOCK 'X'
 #define START '{'
 #define END '}'
 #define PATH '.'
-#define PLAYER '$'
+#define PLAYER 'O'
 
 typedef struct Project{
     bool DEBUG;
-    //ErrorList* errorList;
 }PROJECT_STATE;
 
 bool isDebugOn();
@@ -63,9 +61,4 @@ int getEndFlagState(Maze* maze);
 //functions written by suprith
 
 int movement(Maze * , Point);
-
-/*typedef struct Player{
-}Player;
-*/
-
 

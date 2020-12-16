@@ -40,11 +40,8 @@ void digMaze(Maze* maze){
         }
     }
     setSeed(maze->seed);
-    //printf("\ncalling dig\n");
     int digResult = dig(maze, maze->start);
-    if (isDebugOn()){
-        // 
-    }
+    maze->board[get1dIndex(maze, nxtPointInDir(maze->end,getDirPoint('W')))] = AIR;
 }
 
 int dig(Maze* maze, Point point){
@@ -53,9 +50,6 @@ int dig(Maze* maze, Point point){
         printf("sorry something went wrong!!");
         return 1;
     }
-    //if (maze->board[index] == END){
-    //    setEndFlag(maze, 1);
-    //}
     if(
         (maze->board[index] != AIR) &&
         (maze->board[index] != START) &&

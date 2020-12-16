@@ -4,6 +4,9 @@
 PROJECT_STATE state = {false};
 
 int main(){
+    system("clear");
+    system("cls");
+    system("color 71"); // comment while compiling for linux
     int width, height;
     printf("Enter the width and height values : ");
     scanf("%d%d", &width, &height);
@@ -19,5 +22,3 @@ int main(){
 bool isDebugOn(){
     return state.DEBUG;
 }
-
-
