@@ -35,7 +35,7 @@ Point pop(LL* ll, char pt){
         }
         ll->end = del;
         deletePNode(del->next);
-    }else{
+    }else if(pt == 'S'){
         point = ll->start->point;
         del = ll->start;
         ll->start = del->next;
@@ -51,7 +51,7 @@ Point peep(LL* ll, char pt){
     }
     if(pt == 'L'){
         point = ll->end->point;
-    }else{
+    }else if(pt == 'S'){
         point = ll->start->point;
     }
     return point;
