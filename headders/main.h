@@ -95,3 +95,6 @@ Point pop(LL* ,char);
 Point peep(LL* ,char);
 
 #define NOT_A_VALID_POINT (Point){-1, -1}
+
+int Solution(Maze* ,LL* );
+char* possibleMoves(Maze* ,Point );
