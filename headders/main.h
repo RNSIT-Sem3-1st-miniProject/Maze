@@ -88,9 +88,9 @@ typedef struct LL
 }LL;
 
 LL* createLL();
-void deleteLL(LL *);
-int getLLsize(LL *);
-void append(LL *,PNode *);
-Point pop(LL *,char);
-Point peep(LL *,char);
+void deleteLL(LL* );
+int getLLsize(LL* );
+void append(LL* ,PNode* );
+Point pop(LL* ,char);
+Point peep(LL* ,char);
 
