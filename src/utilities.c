@@ -104,9 +104,20 @@ void writeFile(char* fileName, char* data){
     fclose(file);
 }
 
-// doesnot work in linux 
-void pause(float sec){
-    float milisec = 1000 * sec;
-    clock_t start = clock();
-    while(clock() < (start + milisec));
+void PAUSE(float sec){
+    if (COMPILE_MECHINE == WINDOWS){
+        float milisec = 1000 * sec;
+        clock_t start = clock();
+        while(clock() < (start + milisec));
+    }else{
+        sleep(sec);
+    }
+}
+
+void CLS(){
+    if (COMPILE_MECHINE == WINDOWS){
+        system("cls");
+    }else{
+        system("clear");
+    }
 }

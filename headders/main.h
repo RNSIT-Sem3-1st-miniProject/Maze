@@ -6,6 +6,12 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
+#include <unistd.h> // comment while compiling for windows
+//#include <windows.h> // comment while compiling for LINUX
+
+#define WINDOWS "windows"
+#define LINUX "linux"
+#define COMPILE_MECHINE LINUX
 
 #define AIR ' '
 #define WALL '#'
@@ -14,6 +20,10 @@
 #define END '}'
 #define PATH '.'
 #define PLAYER 'O'
+
+#define GAME_QUIT -1
+#define END_GAME 2
+#define PLAY_NXT_GAME 1
 
 typedef struct Project{
     bool DEBUG;
@@ -28,7 +38,9 @@ void writeFile(char* fileName, char* data);
 
 void setSeed(unsigned int seed);
 int getRandomNumber(int max);
-void pause(float sec);
+
+void PAUSE(float sec);
+void CLS();
 
 typedef struct Point{
     int x, y;
@@ -53,12 +65,9 @@ Maze* createMaze(int height, int width, Point start, Point end, unsigned int see
 void printMaze(Maze* maze);
 int get1dIndex(Maze* maze, Point point);
 Point get2dPoint(Maze* maze, int index);
-void digMaze(Maze* maze);
+int digMaze(Maze* maze);
 void deleteMaze(Maze* maze);
-void setEndFlag(Maze* maze,int state);
-int getEndFlagState(Maze* maze);
 
 //functions written by suprith
 
 int movement(Maze * , Point);
-

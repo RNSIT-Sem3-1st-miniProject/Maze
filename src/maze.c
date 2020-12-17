@@ -13,11 +13,13 @@ Maze* createMaze(int height, int width, Point start, Point end, unsigned int see
     maze->end = end;
     maze->board = (char*)malloc(maze->height * maze->width * sizeof(char*));
     maze->seed = seed;
-    digMaze(maze);
+    if(digMaze(maze) != 0){
+        printf("Unknown ERROR!!!!\n");
+    }
     return maze;
 }
 
-void digMaze(Maze* maze){
+int digMaze(Maze* maze){
     int x, y, index;
     Point point;
     for (y = 0; y < maze->height; y++){
@@ -42,6 +44,7 @@ void digMaze(Maze* maze){
     setSeed(maze->seed);
     int digResult = dig(maze, maze->start);
     maze->board[get1dIndex(maze, nxtPointInDir(maze->end,getDirPoint('W')))] = AIR;
+    return digResult;
 }
 
 int dig(Maze* maze, Point point){

@@ -73,12 +73,8 @@ int movement(Maze *maze , Point startPoint)
             }
             maze->board[index] = PLAYER;
             curpoint = nextpoint;
-            //printMaze(maze);
         }
-        system("clear"); // comment this line if compiling for windows
-        system("cls"); // comment this line if compiling for linux
-        //clrscr();
+        CLS();
         printMaze(maze);
     }
 }
-    

@@ -4,9 +4,10 @@
 PROJECT_STATE state = {false};
 
 int main(){
-    system("clear");
-    system("cls");
-    system("color 71"); // comment while compiling for linux
+    CLS();
+    if(COMPILE_MECHINE == WINDOWS){
+        system("color 71");
+    }
     int width, height;
     printf("Enter the width and height values : ");
     scanf("%d%d", &width, &height);
@@ -15,7 +16,10 @@ int main(){
     Maze* maze = createMaze(height, width, start, end, time(NULL));
     printMaze(maze);
     movement(maze,maze->start);
-    deleteMaze(maze);    
+    deleteMaze(maze);
+    if(COMPILE_MECHINE == WINDOWS){
+        system("color");
+    }
     return 0;
 }
 
