@@ -7,7 +7,7 @@
 #include <stdbool.h>
 #include <time.h>
 //#include <unistd.h> // comment while compiling for windows
-#include <windows.h> // comment while compiling for LINUX
+//#include <windows.h> // comment while compiling for LINUX
 
 #define WINDOWS "windows"
 #define LINUX "linux"
@@ -94,3 +94,4 @@ void append(LL* ,PNode* );
 Point pop(LL* ,char);
 Point peep(LL* ,char);
 
+#define NOT_A_VALID_POINT (Point){-1, -1}
