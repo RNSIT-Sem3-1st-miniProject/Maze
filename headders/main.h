@@ -68,6 +68,38 @@ Point get2dPoint(Maze* maze, int index);
 int digMaze(Maze* maze);
 void deleteMaze(Maze* maze);
 
+// not final for the project
+
+#define MAX_LEVEL 7
+
+typedef struct Player{
+    char* Name;
+    int pointsScored;
+    int maxReachedLevel;
+}Player;
+
+Player* createPlayer();
+void deletePlayer(Player* player);
+char* fetchPlayerName();
+char* getPlayerName(Player* player);
+int getTotalPoints(Player* player);
+void setPoints(Player* player, int points);
+
+typedef struct Level{
+    int levelNumber;
+    int pointsScored;
+    Maze* maze;
+    int minPointsToReachEnd;
+    bool didQuitTheGame;
+    Player* player;
+}Level;
+
+Level* createLevel(int levelNumber, Player* player);
+void deleteLevel(Level* level);
+
+typedef struct game{
+}Game;
+
 //functions written by suprith
 
 int movement(Maze * , Point);
