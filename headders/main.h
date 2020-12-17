@@ -6,12 +6,12 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-#include <unistd.h> // comment while compiling for windows
-//#include <windows.h> // comment while compiling for LINUX
+//#include <unistd.h> // comment while compiling for windows
+#include <windows.h> // comment while compiling for LINUX
 
 #define WINDOWS "windows"
 #define LINUX "linux"
-#define COMPILE_MECHINE LINUX
+#define COMPILE_MECHINE WINDOWS
 
 #define AIR ' '
 #define WALL '#'
@@ -71,3 +71,26 @@ void deleteMaze(Maze* maze);
 //functions written by suprith
 
 int movement(Maze * , Point);
+
+typedef struct PNode
+{
+    Point point;
+    struct PNode* next;
+}PNode;
+
+PNode* createPNode(Point);
+void deletePNode(PNode *);
+
+typedef struct LL
+{
+    PNode* start,* end;
+    int size;
+}LL;
+
+LL* createLL();
+void deleteLL(LL *);
+int getLLsize(LL *);
+void append(LL *,PNode *);
+PNode* pop(LL *,char);
+PNode* peep(LL *,char);
+
