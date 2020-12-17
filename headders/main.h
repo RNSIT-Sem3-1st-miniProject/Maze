@@ -91,6 +91,6 @@ LL* createLL();
 void deleteLL(LL *);
 int getLLsize(LL *);
 void append(LL *,PNode *);
-PNode* pop(LL *,char);
-PNode* peep(LL *,char);
+Point pop(LL *,char);
+Point peep(LL *,char);
 
