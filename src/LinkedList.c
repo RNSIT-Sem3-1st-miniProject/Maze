@@ -3,6 +3,7 @@
 
 PNode* createPNode(Point point)
 {
+    printf("pnode : ");
     PNode* node = (PNode *)malloc(sizeof(PNode));
     node->point = point;
     node->next = NULL;
@@ -39,10 +40,14 @@ void deleteLL(LL* ll){
 }
 
 void append(LL* ll, PNode* point){
+    printf("append : ");
     if (ll->start == NULL){
         ll->start = point;
     }
-    ll->end->next = point;
+    if(ll->end != NULL)
+    {
+        ll->end->next = point;
+    }
     ll->end = point;
     ll->size += 1;
 }
@@ -81,4 +86,20 @@ Point peep(LL* ll, char pt){
         point = ll->start->point;
     }
     return point;
+}
+
+bool isVisited(LL* ll,Point point)
+{
+    bool visited = false;
+    PNode* temp = ll->start;
+    while(
+        (temp != NULL)&&
+        (visited != true)
+    )
+    {
+        visited = isEqualPoints(point,temp->point);
+        temp = temp->next;
+    }
+    return visited;
+
 }

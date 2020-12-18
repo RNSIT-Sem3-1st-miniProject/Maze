@@ -7,11 +7,11 @@
 #include <stdbool.h>
 #include <time.h>
 //#include <unistd.h> // comment while compiling for windows
-//#include <windows.h> // comment while compiling for LINUX
+#include <windows.h> // comment while compiling for LINUX
 
 #define WINDOWS "windows"
 #define LINUX "linux"
-#define COMPILE_MECHINE LINUX
+#define COMPILE_MECHINE WINDOWS
 
 #define AIR ' '
 #define WALL '#'
@@ -139,8 +139,9 @@ int getLLsize(LL* );
 void append(LL* ,PNode* );
 Point pop(LL* ,char);
 Point peep(LL* ,char);
+bool isVisited(LL* ,Point );
 
 #define NOT_A_VALID_POINT (Point){-1, -1}
 
-int Solution(Maze* ,LL* );
+int Solution(Maze* ,Point ,LL* );
 char* possibleMoves(Maze* ,Point );

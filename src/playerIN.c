@@ -47,7 +47,6 @@ int movement(Maze *maze , Point startPoint)
                         switch(ch)
                         {
                             case 'y':{
-                                        //solution function
                                         return 1;
                                     }
                             case 'n':{

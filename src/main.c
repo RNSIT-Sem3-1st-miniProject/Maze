@@ -15,7 +15,15 @@ int main(){
     Point end = {width-1, height-2};
     Maze* maze = createMaze(height, width, start, end, time(NULL));
     printMaze(maze);
-    movement(maze,maze->start);
+    int result = movement(maze,maze->start);
+    printf("%d\n",result);
+    if(result == 1)
+    {
+        LL* ll = createLL();
+        printf("\n%d\n",Solution(maze,maze->start,ll));
+        printf("%d\n",getLLsize(ll));
+        deleteLL(ll);
+    }
     deleteMaze(maze);
     if(COMPILE_MECHINE == WINDOWS){
         system("color");
