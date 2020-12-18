@@ -113,14 +113,14 @@ void setPlayer(Game* game, Player* player){
 }
 
 Level* getLevel(Game* game, int levelNumber){
-    if(levelNumber > game->maxPlayedLevel){
+    if((levelNumber > game->maxPlayedLevel) || (levelNumber >= MAX_LEVEL)){
        return NULL;
     }
     return &(game->levels[levelNumber]);
 }
 
 Level* resetLevel(Game* game, int levelNumber){
-    if(levelNumber > game->maxPlayedLevel){
+    if((levelNumber > game->maxPlayedLevel) || (levelNumber >= MAX_LEVEL)){
        return NULL;
     }
     deleteLevel(&(game->levels[levelNumber]));
@@ -129,10 +129,25 @@ Level* resetLevel(Game* game, int levelNumber){
 }
 
 Level* generateLevel(Game* game, int levelNumber){
-    if(game->maxPlayedLevel +1 > levelNumber){
+    if((game->maxPlayedLevel +1 > levelNumber) || (levelNumber >= MAX_LEVEL)){
         return NULL;
     }
-    
+    game->levels[levelNumber] = createLevel(levelNumber, game->player);
+    return &(game->levels[levelNumber]);
 }
 
-Level* generateNxtLevel(Game* game){}
+Level* generateNxtLevel(Game* game){
+    if(game->maxPlayedLevel + 1 == MAX_LEVEL){
+        return NULL;
+    }
+    return generateLevel(game, game->maxPlayedLevel + 1);
+}
+
+Level* playLevel(Game* game, int levelNumber){
+    if(levelNumber <= game->maxPlayedLevel){
+        return resetLevel(game, levelNumber);
+    }
+    if(levelNumber = game->maxPlayedLevel +1){
+        return generateNxtLevel(game);
+    }
+}
