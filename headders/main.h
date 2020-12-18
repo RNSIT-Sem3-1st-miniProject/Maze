@@ -11,7 +11,7 @@
 
 #define WINDOWS "windows"
 #define LINUX "linux"
-#define COMPILE_MECHINE WINDOWS
+#define COMPILE_MECHINE LINUX
 
 #define AIR ' '
 #define WALL '#'
@@ -24,6 +24,8 @@
 #define GAME_QUIT -1
 #define END_GAME 2
 #define PLAY_NXT_GAME 1
+
+// functions writen by Vasu
 
 typedef struct Project{
     bool DEBUG;
@@ -71,16 +73,16 @@ void deleteMaze(Maze* maze);
 // not final for the project
 
 #define MAX_LEVEL 7
+#define MAX_LEN_PLAYER_NAME 64
 
 typedef struct Player{
-    char* Name;
+    char Name[MAX_LEN_PLAYER_NAME];
     int pointsScored;
     int maxReachedLevel;
 }Player;
 
 Player* createPlayer();
 void deletePlayer(Player* player);
-char* fetchPlayerName();
 char* getPlayerName(Player* player);
 int getTotalPoints(Player* player);
 void setPoints(Player* player, int points);
@@ -94,11 +96,23 @@ typedef struct Level{
     Player* player;
 }Level;
 
-Level* createLevel(int levelNumber, Player* player);
+Level createLevel(int levelNumber, Player* player);
 void deleteLevel(Level* level);
 
 typedef struct game{
+    Level levels[MAX_LEVEL];
+    Player* player;
+    int currentLevel, maxPlayedLevel;
 }Game;
+
+Game gameInit();
+void disolveGame(Game* game);
+void setPlayer(Game* game, Player* player);
+Level* getLevel(Game* game, int levelNumber);
+Level* resetLevel(Game* game, int levelNumber);
+Level* generateLevel(Game* game, int levelNumber);
+Level* generateNxtLevel(Game* game);
+Level* playLevel(Game* game, int levelNumber);
 
 //functions written by suprith
 
