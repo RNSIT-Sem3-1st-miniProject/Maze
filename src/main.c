@@ -16,12 +16,14 @@ int main(){
     Maze* maze = createMaze(height, width, start, end, time(NULL));
     printMaze(maze);
     int result = movement(maze,maze->start);
-    printf("%d\n",result);
     if(result == 1)
     {
         LL* ll = createLL();
-        printf("\n%d\n",Solution(maze,maze->start,ll));
-        printf("%d\n",getLLsize(ll));
+        Solution(maze,maze->start,ll);
+        reflectSolution(maze, ll);
+        CLS();
+        printf("the len of solution is : %d\n",getLLsize(ll));
+        printMaze(maze);
         deleteLL(ll);
     }
     deleteMaze(maze);

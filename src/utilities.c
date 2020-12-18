@@ -121,3 +121,14 @@ void CLS(){
         system("clear");
     }
 }
+
+void reflectSolution(Maze* maze, LL* ll){
+    PNode* temp = ll->start;
+    while(temp != NULL){
+        maze->board[get1dIndex(maze, temp->point)] = PATH;
+        temp = temp->next;
+    }
+}
+
+
+

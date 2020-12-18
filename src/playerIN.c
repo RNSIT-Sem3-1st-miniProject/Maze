@@ -47,6 +47,7 @@ int movement(Maze *maze , Point startPoint)
                         switch(ch)
                         {
                             case 'y':{
+                                        maze->board[get1dIndex(maze, curpoint)] = AIR;
                                         return 1;
                                     }
                             case 'n':{

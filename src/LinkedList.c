@@ -3,7 +3,6 @@
 
 PNode* createPNode(Point point)
 {
-    printf("pnode : ");
     PNode* node = (PNode *)malloc(sizeof(PNode));
     node->point = point;
     node->next = NULL;
@@ -28,6 +27,7 @@ int getLLsize(LL* ll)
 {
     return ll->size;
 }
+
 void deleteLL(LL* ll){
     PNode* del = ll->start;
     while(del != NULL){
@@ -40,7 +40,6 @@ void deleteLL(LL* ll){
 }
 
 void append(LL* ll, PNode* point){
-    printf("append : ");
     if (ll->start == NULL){
         ll->start = point;
     }

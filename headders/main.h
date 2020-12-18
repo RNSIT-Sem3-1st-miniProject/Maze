@@ -6,12 +6,12 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-//#include <unistd.h> // comment while compiling for windows
-#include <windows.h> // comment while compiling for LINUX
+#include <unistd.h> // comment while compiling for windows
+//#include <windows.h> // comment while compiling for LINUX
 
 #define WINDOWS "windows"
 #define LINUX "linux"
-#define COMPILE_MECHINE WINDOWS
+#define COMPILE_MECHINE LINUX
 
 #define AIR ' '
 #define WALL '#'
@@ -145,3 +145,7 @@ bool isVisited(LL* ,Point );
 
 int Solution(Maze* ,Point ,LL* );
 char* possibleMoves(Maze* ,Point );
+
+// writen by vasu
+
+void reflectSolution(Maze* maze, LL* ll);
