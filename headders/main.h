@@ -6,12 +6,12 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-#include <unistd.h> // comment while compiling for windows
-//#include <windows.h> // comment while compiling for LINUX
+//#include <unistd.h> // comment while compiling for windows
+#include <windows.h> // comment while compiling for LINUX
 
 #define WINDOWS "windows"
 #define LINUX "linux"
-#define COMPILE_MECHINE LINUX
+#define COMPILE_MECHINE WINDOWS
 
 #define AIR ' '
 #define WALL '#'
