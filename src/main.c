@@ -6,25 +6,33 @@ PROJECT_STATE state = {false};
 int main(){
     CLS();
     SETCOLOR();
-    int width, height;
-    printf("Enter the width and height values : ");
-    scanf("%d%d", &width, &height);
-    Point start = {0, 1};
-    Point end = {width-1, height-2};
-    Maze* maze = createMaze(height, width, start, end, time(NULL));
-    printMaze(maze);
-    int result = movement(maze,maze->start);
-    if(result == 1)
-    {
-        LL* ll = createLL();
-        Solution(maze,maze->start,ll);
-        reflectSolution(maze, ll);
-        CLS();
-        printf("the len of solution is : %d\n",getLLsize(ll));
-        printMaze(maze);
-        deleteLL(ll);
+    Game game = gameInit();
+    Player* player = createPlayer();
+    setPlayer(&game, player);
+    int levelNumber = 1;
+    int gameResult = PLAY_NXT_GAME;
+    Level* level = NULL;
+    while(
+        (levelNumber < MAX_LEVEL) &&
+        (gameResult != GAME_QUIT)
+    ){
+        if (isDebugOn()){
+            printf("While\n");
+        }
+        generateNxtLevel(&game);
+        printf("after gen\n");
+        level = playLevel(&game, levelNumber);
+        if (level != NULL){
+            printMaze(level->maze);
+            gameResult = movement(level->maze, level->maze->start);
+        }else{
+            disolveGame(&game);
+            return 1;
+        }
+        levelNumber+= 1;
+        gameResult = PLAY_NXT_GAME;
     }
-    deleteMaze(maze);
+    disolveGame(&game);
     RESETCOLOR();
     return 0;
 }

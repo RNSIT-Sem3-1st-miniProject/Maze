@@ -13,7 +13,7 @@ int movement(Maze *maze , Point startPoint)
         if(get1dIndex(maze,curpoint) == -1)
         {
             printf("Sorry something went wrong!\n");
-            return -1;
+            return ERROR;
         }
         maze->board[get1dIndex(maze,curpoint)] = PLAYER;
         input = getchar();
@@ -48,7 +48,7 @@ int movement(Maze *maze , Point startPoint)
                         {
                             case 'y':{
                                         maze->board[get1dIndex(maze, curpoint)] = AIR;
-                                        return 1;
+                                        return GAME_QUIT;
                                     }
                             case 'n':{
                                         continue;
@@ -71,6 +71,7 @@ int movement(Maze *maze , Point startPoint)
             {
             maze->board[get1dIndex(maze,curpoint)] = AIR;
             }
+            maze->keystrokeCount += 1;
             maze->board[index] = PLAYER;
             curpoint = nextpoint;
         }

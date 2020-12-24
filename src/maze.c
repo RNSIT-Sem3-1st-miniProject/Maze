@@ -6,6 +6,9 @@ bool checkIfPossibleToDig(Maze* maze, Point point);
 char* possiblePossitionsToDig(Maze* maze, Point point);
 
 Maze* createMaze(int height, int width, Point start, Point end, unsigned int seed){
+    if(isDebugOn()){
+        printf("maze\n");
+    }
     Maze* maze = (Maze*) malloc(sizeof(Maze));
     maze->height = height;
     maze->width = width;

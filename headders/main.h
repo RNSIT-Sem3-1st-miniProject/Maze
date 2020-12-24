@@ -21,9 +21,9 @@
 #define PATH '.'
 #define PLAYER 'O'
 
-#define GAME_QUIT -1
+#define GAME_QUIT 1
 #define END_GAME 2
-#define PLAY_NXT_GAME 1
+#define PLAY_NXT_GAME 0
 
 // writen by vasu
 

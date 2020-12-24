@@ -33,10 +33,14 @@ void setPoints(Player* player, int points){
 // Level
 
 Level createLevel(int levelNumber, Player* player){
+    if (isDebugOn()){
+        printf("create\n");
+    }
     Level level;
     int height, width;
     unsigned int seed = time(NULL);
     level.levelNumber = levelNumber;
+    level.solution = createLL();
     switch (level.levelNumber){
         case 1:{
             height = 20;
@@ -75,6 +79,9 @@ Level createLevel(int levelNumber, Player* player){
         }
     }
     level.maze = createMaze(height, width, (Point){0, 1}, (Point){width-1, height-2}, seed);
+    if(isDebugOn()){
+        printMaze(level.maze);
+    }
     Solution(level.maze, level.maze->start, level.solution);
     level.minKeystrokesToReachEnd = getLLsize(level.solution);
     level.pointsScored = 0;
@@ -85,6 +92,7 @@ Level createLevel(int levelNumber, Player* player){
 
 void deleteLevel(Level* level){
     deleteMaze(level->maze);
+    deleteLL(level->solution);
 }
 
 // Game
@@ -97,10 +105,11 @@ Game gameInit(){
     return game;
 }
 
-void disloveGame(Game* game){
+void disolveGame(Game* game){
     for (int lvl = 1; lvl <= game->maxPlayedLevel; lvl++){
         deleteLevel(&(game->levels[lvl-1]));
     }
+    deletePlayer(game->player);
     game->player = NULL;
     game->currentLevel = 0;
     game->maxPlayedLevel = 0;
@@ -108,7 +117,7 @@ void disloveGame(Game* game){
 
 void setPlayer(Game* game, Player* player){
     if(game->player != NULL){
-        disloveGame(game);
+        disolveGame(game);
     }
     game->player = player;
 }
@@ -125,6 +134,9 @@ int resetLevel(Game* game, int levelNumber){
 }
 
 int generateLevel(Game* game, int levelNumber){
+    if (isDebugOn()){
+        printf("gen\n");
+    }
     if((levelNumber > MAX_LEVEL) || (levelNumber < 1)){
         return ERROR;
     }
@@ -139,6 +151,9 @@ int generateLevel(Game* game, int levelNumber){
 }
 
 int generateNxtLevel(Game* game){
+    if (isDebugOn()){
+        printf("genN\n");
+    }
     if (game->maxPlayedLevel + 1 == MAX_LEVEL){
         return ERROR;
     }
