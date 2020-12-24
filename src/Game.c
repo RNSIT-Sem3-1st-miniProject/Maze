@@ -75,7 +75,8 @@ Level createLevel(int levelNumber, Player* player){
         }
     }
     level.maze = createMaze(height, width, (Point){0, 1}, (Point){width-1, height-2}, seed);
-    level.minKeystrokesToReachEnd = 0;
+    Solution(level.maze, level.maze->start, level.solution);
+    level.minKeystrokesToReachEnd = getLLsize(level.solution);
     level.pointsScored = 0;
     level.player = player;
     level.didQuitTheGame = false;
@@ -161,37 +162,3 @@ Level* playLevel(Game* game, int levelNumber){
         return NULL;
     }
 }
-
-/*
-int resetLevel(Game* game, int levelNumber){
-    if((levelNumber > game->maxPlayedLevel) || (levelNumber >= MAX_LEVEL)){
-       return -1;
-    }
-    deleteLevel(&(game->levels[levelNumber]));
-    game->levels[levelNumber] = createLevel(levelNumber, game->player);
-    return 0;
-}
-
-Level* generateLevel(Game* game, int levelNumber){
-    if((game->maxPlayedLevel +1 > levelNumber) || (levelNumber >= MAX_LEVEL)){
-        return NULL;
-    }
-    game->levels[levelNumber] = createLevel(levelNumber, game->player);
-    return &(game->levels[levelNumber]);
-}
-
-Level* generateNxtLevel(Game* game){
-    if(game->maxPlayedLevel + 1 == MAX_LEVEL){
-        return NULL;
-    }
-    return generateLevel(game, game->maxPlayedLevel + 1);
-}
-
-Level* playLevel(Game* game, int levelNumber){
-    if(levelNumber <= game->maxPlayedLevel){
-        return resetLevel(game, levelNumber);
-    }
-    if(levelNumber == game->maxPlayedLevel +1){
-        return generateNxtLevel(game);
-    }
-}*/

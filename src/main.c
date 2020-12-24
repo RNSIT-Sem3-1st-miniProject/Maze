@@ -5,9 +5,7 @@ PROJECT_STATE state = {false};
 
 int main(){
     CLS();
-    if(COMPILE_MECHINE == WINDOWS){
-        system("color 71");
-    }
+    SETCOLOR();
     int width, height;
     printf("Enter the width and height values : ");
     scanf("%d%d", &width, &height);
@@ -27,9 +25,7 @@ int main(){
         deleteLL(ll);
     }
     deleteMaze(maze);
-    if(COMPILE_MECHINE == WINDOWS){
-        system("color");
-    }
+    RESETCOLOR();
     return 0;
 }
 

@@ -27,6 +27,20 @@
 
 // writen by vasu
 
+typedef struct Project{
+    bool DEBUG;
+}PROJECT_STATE;
+
+bool isDebugOn();
+
+void setSeed(unsigned int seed);
+int getRandomNumber(int max);
+
+void PAUSE(float sec);
+void CLS();
+void SETCOLOR();
+void RESETCOLOR();
+
 typedef struct Point{
     int x, y;
 }Point;
@@ -88,18 +102,6 @@ char* possibleMoves(Maze* ,Point );
 
 // functions writen by Vasu
 
-typedef struct Project{
-    bool DEBUG;
-}PROJECT_STATE;
-
-bool isDebugOn();
-
-void setSeed(unsigned int seed);
-int getRandomNumber(int max);
-
-void PAUSE(float sec);
-void CLS();
-
 #define MAX_LEVEL 7
 #define MAX_LEN_PLAYER_NAME 64
 
@@ -119,6 +121,7 @@ typedef struct Level{
     int levelNumber;
     int pointsScored;
     Maze* maze;
+    LL* solution;
     int minKeystrokesToReachEnd;
     bool didQuitTheGame;
     Player* player;
@@ -132,7 +135,6 @@ typedef struct game{
     Level levels[MAX_LEVEL];
     Player* player;
     int currentLevel, maxPlayedLevel;
-    LL* solution;
 }Game;
 
 #define LEVEL_LOCKED 1

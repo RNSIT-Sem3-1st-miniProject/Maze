@@ -65,45 +65,6 @@ char getDirChar(Point point){
     }
 }
 
-// testing files
-
-char* readFile(char* fileName){
-    FILE *file = fopen(fileName, "r");
-    char* data = NULL;
-    char* buffer = NULL;
-    do{
-        // reset buffer
-        if (buffer != NULL){
-            free(buffer);
-            buffer = NULL;
-        }
-        // set buffer mem
-        buffer = (char*) malloc(sizeof(char) * (readBuffer));
-        fgets(buffer, readBuffer, file);
-        if (strlen(buffer) != 0){
-            if (data != NULL){
-                data = (char*) realloc(data, sizeof(char) * (strlen(data) + strlen(buffer)) );
-            }else{
-                data = (char*) malloc(sizeof(char) * strlen(buffer) );
-            }
-            strcat(data, buffer);
-        }
-    }while(strlen(buffer)!= 0);
-    free(buffer);
-    if (data[strlen(data)] != '\0'){
-        data = (char*) realloc(data, sizeof(char) * (strlen(data) + 1) );
-        data[strlen(data)+1] = '\0';
-    }
-    fclose(file);
-    return data;
-}
-
-void writeFile(char* fileName, char* data){
-    FILE *file = fopen(fileName, "a");
-    fprintf(file, data);
-    fclose(file);
-}
-
 void PAUSE(float sec){
     if (COMPILE_MECHINE == WINDOWS){
         float milisec = 1000 * sec;
@@ -130,5 +91,18 @@ void reflectSolution(Maze* maze, LL* ll){
     }
 }
 
+void SETCOLOR(){
+    if (COMPILE_MECHINE == WINDOWS){
+        system("color 71");
+    }else{
+        printf("\033[34m\033[47m");
+    }
+}
 
-
+void RESETCOLOR(){
+    if(COMPILE_MECHINE == WINDOWS){
+        system("color");
+    }else{
+        printf("\033[94m\033[49m");
+    }
+}
