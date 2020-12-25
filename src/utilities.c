@@ -71,7 +71,7 @@ void PAUSE(float sec){
         clock_t start = clock();
         while(clock() < (start + milisec));
     }else{
-        sleep(sec);
+        sleep(1000*sec);
     }
 }
 
