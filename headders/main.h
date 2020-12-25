@@ -102,7 +102,7 @@ char* possibleMoves(Maze* ,Point );
 
 // functions writen by Vasu
 
-#define MAX_LEVEL 7
+#define MAX_LEVEL 9
 #define MAX_LEN_PLAYER_NAME 64
 
 typedef struct Player{

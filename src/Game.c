@@ -77,6 +77,16 @@ Level* createLevel(int levelNumber, Player* player){
             width = 80;
             break;
         }
+        case 8:{
+            height = 35;
+            width = 100;
+            break;
+        }
+        case 9:{
+            height = 35;
+            width = 150;
+            break;
+        }
     }
     level->maze = createMaze(height, width, (Point){0, 1}, (Point){width-1, height-2}, seed);
     if(isDebugOn()){
@@ -151,7 +161,7 @@ int generateNxtLevel(Game* game){
     if (isDebugOn()){
         printf("genN\n");
     }
-    if (game->levelNumber + 1 == MAX_LEVEL){
+    if ((game->levelNumber + 1) > MAX_LEVEL){
         return ERROR;
     }
     if(game->level != NULL){

@@ -24,6 +24,8 @@ int main(){
         if (level != NULL){
             printMaze(level->maze);
             gameResult = movement(level->maze, level->maze->start);
+            reflectSolution(game.level->maze, game.level->solution);
+            printMaze(game.level->maze);
         }else{
             disolveGame(&game);
             return 1;
