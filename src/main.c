@@ -13,15 +13,14 @@ int main(){
     int gameResult = PLAY_NXT_GAME;
     Level* level = NULL;
     while(
-        (levelNumber < MAX_LEVEL) &&
+        (levelNumber <= MAX_LEVEL) &&
         (gameResult != GAME_QUIT)
     ){
         if (isDebugOn()){
             printf("While\n");
         }
         generateNxtLevel(&game);
-        printf("after gen\n");
-        level = playLevel(&game, levelNumber);
+        level = playLevel(&game);
         if (level != NULL){
             printMaze(level->maze);
             gameResult = movement(level->maze, level->maze->start);

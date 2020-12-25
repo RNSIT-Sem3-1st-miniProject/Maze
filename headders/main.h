@@ -127,14 +127,14 @@ typedef struct Level{
     Player* player;
 }Level;
 
-Level createLevel(int levelNumber, Player* player);
+Level* createLevel(int levelNumber, Player* player);
 void deleteLevel(Level* level);
 int countPointsScored(Level* level);
 
 typedef struct game{
-    Level levels[MAX_LEVEL];
+    int levelNumber;
+    Level* level;
     Player* player;
-    int currentLevel, maxPlayedLevel;
 }Game;
 
 #define LEVEL_LOCKED 1
@@ -144,9 +144,10 @@ typedef struct game{
 Game gameInit();
 void disolveGame(Game* game);
 void setPlayer(Game* game, Player* player);
+int resetGame(Game* game);
 int resetLevel(Game* game, int levelNumber);
 int generateLevel(Game* game, int levelNumber);
 int generateNxtLevel(Game* game);
-Level* playLevel(Game* game, int levelNumber);
+Level* playLevel(Game* game);
 
 void reflectSolution(Maze* maze, LL* ll);
