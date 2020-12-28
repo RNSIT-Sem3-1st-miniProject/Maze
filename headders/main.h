@@ -21,6 +21,7 @@
 #define PLAYER 'O'
 
 #define GAME_QUIT 1
+#define LEVEL_PASS 100
 #define END_GAME 2
 #define PLAY_NXT_GAME 0
 
@@ -116,6 +117,8 @@ char* getPlayerName(Player* player);
 int getTotalPoints(Player* player);
 void setPoints(Player* player, int points);
 
+#define yea_lmao true
+
 typedef struct Level{
     int levelNumber;
     int pointsScored;
@@ -148,5 +151,6 @@ int resetLevel(Game* game, int levelNumber);
 int generateLevel(Game* game, int levelNumber);
 int generateNxtLevel(Game* game);
 Level* playLevel(Game* game);
+int calculatePointsScored(Level* level);
 
 void reflectSolution(Maze* maze, LL* ll);

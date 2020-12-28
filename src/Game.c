@@ -175,3 +175,9 @@ int generateNxtLevel(Game* game){
 Level* playLevel(Game* game){
     return game->level;
 }
+
+int calculatePointsScored(Level* level){
+    int min = level->minKeystrokesToReachEnd;
+    int count = level->maze->keystrokeCount;
+    return ((min/count) * 100);
+}

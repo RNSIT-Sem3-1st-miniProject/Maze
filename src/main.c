@@ -24,6 +24,9 @@ int main(){
         if (level != NULL){
             printMaze(level->maze);
             gameResult = movement(level->maze, level->maze->start);
+            if(gameResult == GAME_QUIT){
+                level->didQuitTheGame = yea_lmao;
+            }
             reflectSolution(game.level->maze, game.level->solution);
             printMaze(game.level->maze);
         }else{
@@ -31,7 +34,6 @@ int main(){
             return 1;
         }
         levelNumber+= 1;
-        gameResult = PLAY_NXT_GAME;
     }
     disolveGame(&game);
     RESETCOLOR();
