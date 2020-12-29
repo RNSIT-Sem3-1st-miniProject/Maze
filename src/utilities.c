@@ -66,12 +66,15 @@ char getDirChar(Point point){
 }
 
 void PAUSE(float sec){
+    if(isDebugOn()){
+        printf("pause\n");
+    }
     if (COMPILE_MECHINE == WINDOWS){
         float milisec = 1000 * sec;
         clock_t start = clock();
         while(clock() < (start + milisec));
     }else{
-        sleep(1000*sec);
+        sleep(sec);
     }
 }
 
