@@ -2,18 +2,19 @@
 
 int movement(Maze *maze , Point startPoint)
 {   
+    bool end = false;
     Point curpoint,nextpoint;
     curpoint = startPoint;
     char input;
     int index;
     getchar();
     printf("w-up\t d-right\t s-down\t a-left\t q-quit\n");
-    while(1)
+    while(!end)
     {
         if(get1dIndex(maze,curpoint) == -1)
         {
             printf("Sorry something went wrong!\n");
-            return -1;
+            return ERROR;
         }
         maze->board[get1dIndex(maze,curpoint)] = PLAYER;
         input = getchar();
@@ -48,7 +49,7 @@ int movement(Maze *maze , Point startPoint)
                         {
                             case 'y':{
                                         maze->board[get1dIndex(maze, curpoint)] = AIR;
-                                        return 1;
+                                        return GAME_QUIT;
                                     }
                             case 'n':{
                                         continue;
@@ -58,9 +59,12 @@ int movement(Maze *maze , Point startPoint)
                     } 
         }
         index = get1dIndex(maze,nextpoint);
+        if(index == -1){
+            return ERROR;
+        }
         if(
-            (index != -1) && 
-            (maze->board[index] == AIR)
+            (maze->board[index] == AIR) ||
+            (maze->board[index] == END)
         )
         {
             if(isEqualPoints(curpoint,startPoint))
@@ -69,7 +73,11 @@ int movement(Maze *maze , Point startPoint)
             }
             else
             {
-            maze->board[get1dIndex(maze,curpoint)] = AIR;
+                maze->board[get1dIndex(maze,curpoint)] = AIR;
+            }
+            maze->keystrokeCount += 1;
+            if (maze->board[index] == END){
+                end = true;
             }
             maze->board[index] = PLAYER;
             curpoint = nextpoint;
@@ -77,4 +85,5 @@ int movement(Maze *maze , Point startPoint)
         CLS();
         printMaze(maze);
     }
+    return LEVEL_PASS;
 }

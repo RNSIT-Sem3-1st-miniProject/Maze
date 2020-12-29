@@ -6,8 +6,12 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
+<<<<<<< HEAD
 //#include <unistd.h> // comment while compiling for windows
 #include <windows.h> // comment while compiling for LINUX
+=======
+#include <unistd.h> // comment while compiling for windows
+>>>>>>> a2e662c55b5ba58027d9309267e58632c7effefd
 
 #define WINDOWS "windows"
 #define LINUX "linux"
@@ -21,11 +25,12 @@
 #define PATH '.'
 #define PLAYER 'O'
 
-#define GAME_QUIT -1
+#define GAME_QUIT 1
+#define LEVEL_PASS 100
 #define END_GAME 2
-#define PLAY_NXT_GAME 1
+#define PLAY_NXT_GAME 0
 
-// functions writen by Vasu
+// writen by vasu
 
 typedef struct Project{
     bool DEBUG;
@@ -33,16 +38,13 @@ typedef struct Project{
 
 bool isDebugOn();
 
-// testing this files
-#define readBuffer 128
-char* readFile(char* fileName);
-void writeFile(char* fileName, char* data);
-
 void setSeed(unsigned int seed);
 int getRandomNumber(int max);
 
 void PAUSE(float sec);
 void CLS();
+void SETCOLOR();
+void RESETCOLOR();
 
 typedef struct Point{
     int x, y;
@@ -61,6 +63,7 @@ typedef struct Maze{
     int width, height;
     Point start, end;
     unsigned int seed;
+    int keystrokeCount;
 }Maze;
 
 Maze* createMaze(int height, int width, Point start, Point end, unsigned int seed);
@@ -69,50 +72,6 @@ int get1dIndex(Maze* maze, Point point);
 Point get2dPoint(Maze* maze, int index);
 int digMaze(Maze* maze);
 void deleteMaze(Maze* maze);
-
-// not final for the project
-
-#define MAX_LEVEL 7
-#define MAX_LEN_PLAYER_NAME 64
-
-typedef struct Player{
-    char Name[MAX_LEN_PLAYER_NAME];
-    int pointsScored;
-    int maxReachedLevel;
-}Player;
-
-Player* createPlayer();
-void deletePlayer(Player* player);
-char* getPlayerName(Player* player);
-int getTotalPoints(Player* player);
-void setPoints(Player* player, int points);
-
-typedef struct Level{
-    int levelNumber;
-    int pointsScored;
-    Maze* maze;
-    int minPointsToReachEnd;
-    bool didQuitTheGame;
-    Player* player;
-}Level;
-
-Level createLevel(int levelNumber, Player* player);
-void deleteLevel(Level* level);
-
-typedef struct game{
-    Level levels[MAX_LEVEL];
-    Player* player;
-    int currentLevel, maxPlayedLevel;
-}Game;
-
-Game gameInit();
-void disolveGame(Game* game);
-void setPlayer(Game* game, Player* player);
-Level* getLevel(Game* game, int levelNumber);
-Level* resetLevel(Game* game, int levelNumber);
-Level* generateLevel(Game* game, int levelNumber);
-Level* generateNxtLevel(Game* game);
-Level* playLevel(Game* game, int levelNumber);
 
 //functions written by suprith
 
@@ -146,6 +105,57 @@ bool isVisited(LL* ,Point );
 int Solution(Maze* ,Point ,LL* );
 char* possibleMoves(Maze* ,Point );
 
-// writen by vasu
+// functions writen by Vasu
+
+#define MAX_LEVEL 9
+#define MAX_LEN_PLAYER_NAME 64
+
+typedef struct Player{
+    char Name[MAX_LEN_PLAYER_NAME];
+    int pointsScored;
+    int maxReachedLevel;
+}Player;
+
+Player* createPlayer();
+void deletePlayer(Player* player);
+char* getPlayerName(Player* player);
+int getTotalPoints(Player* player);
+void setPoints(Player* player, int points);
+
+#define yea_lmao true
+
+typedef struct Level{
+    int levelNumber;
+    int pointsScored;
+    Maze* maze;
+    LL* solution;
+    int minKeystrokesToReachEnd;
+    bool didQuitTheGame;
+    Player* player;
+}Level;
+
+Level* createLevel(int levelNumber, Player* player);
+void deleteLevel(Level* level);
+int countPointsScored(Level* level);
+
+typedef struct game{
+    int levelNumber;
+    Level* level;
+    Player* player;
+}Game;
+
+#define LEVEL_LOCKED 1
+#define ERROR -1
+#define PASS 0
+
+Game gameInit();
+void disolveGame(Game* game);
+void setPlayer(Game* game, Player* player);
+int resetGame(Game* game);
+int resetLevel(Game* game, int levelNumber);
+int generateLevel(Game* game, int levelNumber);
+int generateNxtLevel(Game* game);
+Level* playLevel(Game* game);
+int calculatePointsScored(Level* level);
 
 void reflectSolution(Maze* maze, LL* ll);

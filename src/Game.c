@@ -32,12 +32,16 @@ void setPoints(Player* player, int points){
 
 // Level
 
-Level createLevel(int levelNumber, Player* player){
-    Level level;
+Level* createLevel(int levelNumber, Player* player){
+    if (isDebugOn()){
+        printf("create\n");
+    }
+    Level* level = (Level*) malloc(sizeof(Level));
     int height, width;
     unsigned int seed = time(NULL);
-    level.levelNumber = levelNumber;
-    switch (level.levelNumber){
+    level->levelNumber = levelNumber;
+    level->solution = createLL();
+    switch (level->levelNumber){
         case 1:{
             height = 20;
             width = 20;
@@ -73,81 +77,107 @@ Level createLevel(int levelNumber, Player* player){
             width = 80;
             break;
         }
+        case 8:{
+            height = 35;
+            width = 100;
+            break;
+        }
+        case 9:{
+            height = 35;
+            width = 150;
+            break;
+        }
     }
-    level.maze = createMaze(height, width, (Point){0, 1}, (Point){width-1, height-2}, seed);
-    level.minPointsToReachEnd = 0;
-    level.pointsScored = 0;
-    level.player = player;
-    level.didQuitTheGame = false;
+    level->maze = createMaze(height, width, (Point){0, 1}, (Point){width-1, height-2}, seed);
+    if(isDebugOn()){
+        printMaze(level->maze);
+    }
+    Solution(level->maze, level->maze->start, level->solution);
+    level->minKeystrokesToReachEnd = getLLsize(level->solution);
+    level->pointsScored = 0;
+    level->player = player;
+    level->didQuitTheGame = false;
     return level;
 }
 
 void deleteLevel(Level* level){
     deleteMaze(level->maze);
+    deleteLL(level->solution);
 }
 
 // Game
 
 Game gameInit(){
     Game game;
+    game.level = NULL;
+    game.levelNumber = 0;
     game.player = NULL;
-    game.currentLevel = 0;
-    game.maxPlayedLevel = 0;
     return game;
 }
 
-void disloveGame(Game* game){
-    for (int lvl = 0; lvl < game->maxPlayedLevel; lvl++){
-        deleteLevel(&(game->levels[lvl]));
+void disolveGame(Game* game){
+    deleteLevel(game->level);
+    if(game->level != NULL){
+        free(game->level);
+        game->level = NULL;
     }
+    deletePlayer(game->player);
     game->player = NULL;
-    game->currentLevel = 0;
-    game->maxPlayedLevel = 0;
 }
 
 void setPlayer(Game* game, Player* player){
     if(game->player != NULL){
-        disloveGame(game);
+        disolveGame(game);
     }
     game->player = player;
 }
 
-Level* getLevel(Game* game, int levelNumber){
-    if((levelNumber > game->maxPlayedLevel) || (levelNumber >= MAX_LEVEL)){
-       return NULL;
+int resetLevel(Game* game, int levelNumber){
+    if((levelNumber > MAX_LEVEL) || (levelNumber < 1)){
+        return ERROR;
     }
-    return &(game->levels[levelNumber]);
+    deleteLevel(game->level);
+    free(game->level);
+    return generateLevel(game, levelNumber);
 }
 
-Level* resetLevel(Game* game, int levelNumber){
-    if((levelNumber > game->maxPlayedLevel) || (levelNumber >= MAX_LEVEL)){
-       return NULL;
+int generateLevel(Game* game, int levelNumber){
+    printf("%d\n", levelNumber);
+    if (isDebugOn()){
+        printf("gen\n");
     }
-    deleteLevel(&(game->levels[levelNumber]));
-    game->levels[levelNumber] = createLevel(levelNumber, game->player);
-    return &(game->levels[levelNumber]);
+    if((levelNumber > MAX_LEVEL) || (levelNumber < 1)){
+        return ERROR;
+    }
+    if(game->level != NULL){
+        free(game->level);
+        game->level = NULL;
+    }
+    game->level = createLevel(levelNumber, game->player);
+    return PASS;
 }
 
-Level* generateLevel(Game* game, int levelNumber){
-    if((game->maxPlayedLevel +1 > levelNumber) || (levelNumber >= MAX_LEVEL)){
-        return NULL;
+int generateNxtLevel(Game* game){
+    if (isDebugOn()){
+        printf("genN\n");
     }
-    game->levels[levelNumber] = createLevel(levelNumber, game->player);
-    return &(game->levels[levelNumber]);
+    if ((game->levelNumber + 1) > MAX_LEVEL){
+        return ERROR;
+    }
+    if(game->level != NULL){
+        free(game->level);
+        game->level = NULL;
+    }
+    game->levelNumber += 1;
+    return generateLevel(game, game->levelNumber);
 }
 
-Level* generateNxtLevel(Game* game){
-    if(game->maxPlayedLevel + 1 == MAX_LEVEL){
-        return NULL;
-    }
-    return generateLevel(game, game->maxPlayedLevel + 1);
+Level* playLevel(Game* game){
+    return game->level;
 }
 
-Level* playLevel(Game* game, int levelNumber){
-    if(levelNumber <= game->maxPlayedLevel){
-        return resetLevel(game, levelNumber);
-    }
-    if(levelNumber = game->maxPlayedLevel +1){
-        return generateNxtLevel(game);
-    }
+int calculatePointsScored(Level* level){
+    int min = level->minKeystrokesToReachEnd;
+    int count = level->maze->keystrokeCount;
+    return ((min/count) * 100);
 }

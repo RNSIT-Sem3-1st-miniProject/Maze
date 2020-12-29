@@ -3,6 +3,9 @@
 
 char* possibleMoves(Maze* maze,Point point)
 {
+    if(isDebugOn()){
+        printf("move\n");
+    }
     char* result =(char *)malloc(sizeof(char)*5);
     int strIndex = 0;
     int dirIndex = 0;
@@ -29,6 +32,9 @@ char* possibleMoves(Maze* maze,Point point)
 
 int Solution(Maze* maze,Point point,LL* ll)
 {
+    if(isDebugOn()){
+        printf("sol\n");
+    }
     append(ll,createPNode(point));
     if(isEqualPoints(point,maze->end))
     {
