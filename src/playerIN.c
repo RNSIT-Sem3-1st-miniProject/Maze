@@ -60,13 +60,21 @@ int movement(Maze *maze , Point startPoint)
         }
         index = get1dIndex(maze,nextpoint);
         if(index == -1){
+            if(isDebugOn())
+            {
+                printf("%d\n",ERROR);
+            }
             return ERROR;
         }
         if(
             (maze->board[index] == AIR) ||
-            (maze->board[index] == END)
+            (maze->board[index] == END) 
         )
         {
+            if(isDebugOn())
+            {
+                printf("%c\n",maze->board[index]);
+            }
             if(isEqualPoints(curpoint,startPoint))
             {
                 maze->board[get1dIndex(maze,curpoint)] = START;   

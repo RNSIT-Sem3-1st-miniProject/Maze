@@ -6,12 +6,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-<<<<<<< HEAD
 //#include <unistd.h> // comment while compiling for windows
-#include <windows.h> // comment while compiling for LINUX
-=======
-#include <unistd.h> // comment while compiling for windows
->>>>>>> a2e662c55b5ba58027d9309267e58632c7effefd
 
 #define WINDOWS "windows"
 #define LINUX "linux"
