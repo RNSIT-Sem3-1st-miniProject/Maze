@@ -42,11 +42,8 @@ int main(){
             printf("Do you wish to continue(y or n)?");
             ch = getchar();
             getchar();
-            if(ch == 'y')
-            {
-                choice = PLAY_NXT_GAME;
-            }
-            else
+            choice = PLAY_NXT_GAME;
+            if(ch == 'n')
             {
                 choice = END_GAME;
             }
@@ -58,6 +55,7 @@ int main(){
         }
         levelNumber+= 1;
     }
+    
     disolveGame(&game);
     RESETCOLOR();
     return 0;

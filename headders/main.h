@@ -6,11 +6,11 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-//#include <unistd.h> // comment while compiling for windows
+#include <unistd.h> // comment while compiling for windows
 
 #define WINDOWS "windows"
 #define LINUX "linux"
-#define COMPILE_MECHINE WINDOWS
+#define COMPILE_MECHINE LINUX
 
 #define AIR ' '
 #define WALL '#'
@@ -102,7 +102,7 @@ char* possibleMoves(Maze* ,Point );
 
 // functions writen by Vasu
 
-#define MAX_LEVEL 9
+#define MAX_LEVEL 3
 #define MAX_LEN_PLAYER_NAME 64
 
 typedef struct Player{
