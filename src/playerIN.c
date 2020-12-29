@@ -8,7 +8,7 @@ int movement(Maze *maze , Point startPoint)
     curpoint = startPoint;
     char input;
     int index;
-    getchar();
+    //getchar();
     printf("w-up\t d-right\t s-down\t a-left\t q-quit\n");
     while(!end)
     {

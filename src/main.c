@@ -32,6 +32,8 @@ int main(){
                 reflectSolution(game.level->maze, game.level->solution);
                 printMaze(game.level->maze);
                 level->didQuitTheGame = yea_lmao;
+            }else if(gameResult == LEVEL_PASS){
+                setPoints(game.player, calculatePointsScored(game.level));
             }
             if(levelNumber == MAX_LEVEL)
             {   
@@ -40,8 +42,9 @@ int main(){
                 return 1;
             }
             printf("Do you wish to continue(y or n)?");
-            ch = getchar();
             getchar();
+            ch = getchar();
+            printf("choice : \"%c\"\n",ch);
             choice = PLAY_NXT_GAME;
             if(ch == 'n')
             {
@@ -55,7 +58,10 @@ int main(){
         }
         levelNumber+= 1;
     }
-    
+    CLS();
+    printf("Player name : %s\n", game.player->Name);
+    printf("Level reached : %d\n", game.player->maxReachedLevel);
+    printf("Points scored : %d\n", game.player->pointsScored);
     disolveGame(&game);
     RESETCOLOR();
     return 0;

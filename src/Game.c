@@ -6,7 +6,6 @@
 Player* createPlayer(){
     Player* player = (Player*) malloc(sizeof(Player));
     printf("Enter the player name : ");
-    getchar();
     fgets(player->Name, MAX_LEN_PLAYER_NAME, stdin);
     player->Name[strlen(player->Name) + 1] = '\0';
     player->pointsScored = 0;
@@ -179,5 +178,6 @@ Level* playLevel(Game* game){
 int calculatePointsScored(Level* level){
     int min = level->minKeystrokesToReachEnd;
     int count = level->maze->keystrokeCount;
+    printf("Scored : %d\n", ((min/count) * 100));
     return ((min/count) * 100);
 }
