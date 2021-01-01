@@ -3,9 +3,15 @@
 
 PROJECT_STATE state = {false};
 
+Theme themeSet[3];
+int themeIndex = defaultTheme;
+
 int main(){
     CLS();
-    SETCOLOR();
+
+    themeSet[defaultTheme] = constructTheme(defaultTheme);
+
+    SETCOLOR(BACKGROUND);
     Game game = gameInit();
     Player* player = createPlayer();
     setPlayer(&game, player);
@@ -33,6 +39,9 @@ int main(){
                 printMaze(game.level->maze);
                 level->didQuitTheGame = yea_lmao;
             }else if(gameResult == LEVEL_PASS){
+                if(game.player->maxReachedLevel < game.levelNumber){
+                    game.player->maxReachedLevel = game.levelNumber;
+                }
                 setPoints(game.player, calculatePointsScored(game.level));
             }
             if(levelNumber == MAX_LEVEL)
@@ -69,4 +78,12 @@ int main(){
 
 bool isDebugOn(){
     return state.DEBUG;
+}
+
+Theme getTheme(int themeIndex){
+    return themeSet[themeIndex];
+}
+
+int getSelectedThemeIndex(){
+    return themeIndex;
 }

@@ -94,11 +94,24 @@ void reflectSolution(Maze* maze, LL* ll){
     }
 }
 
-void SETCOLOR(){
+void SETCOLOR(char preSetColor){
+    Theme theme = getTheme(getSelectedThemeIndex());
     if (COMPILE_MECHINE == WINDOWS){
         system("color 71");
     }else{
-        printf("\033[34m\033[47m");
+        if(preSetColor == WALL){
+            printf("%s", theme.wall);
+        }else if(preSetColor == AIR){
+            printf("%s", theme.air);
+        }else if(preSetColor == PATH){
+            printf("%s", theme.path);
+        }else if(preSetColor == PLAYER){
+            printf("%s", theme.player);
+        }else if(preSetColor == BLOCK){
+            printf("%s", theme.block);
+        }else{
+            printf("%s", theme.screen);
+        }
     }
 }
 
@@ -108,4 +121,40 @@ void RESETCOLOR(){
     }else{
         printf("\033[94m\033[49m");
     }
+}
+
+Theme constructTheme(int themeIndex){
+    Theme theme;
+    theme.wall[0] = ' ';
+    theme.player[0] = ' ';
+    theme.block[0] = ' ';
+    theme.path[0] = ' ';
+    theme.air[0] = ' ';
+    theme.screen[0] = ' ';
+    if(themeIndex == defaultTheme){
+        strcat(theme.wall, BGBlack);
+        strcat(theme.wall, FGRed);
+
+        strcat(theme.player, BGTeal);
+        strcat(theme.player, FGBlack);
+
+        strcat(theme.block, BGBlack);
+        strcat(theme.block, FGBlue);
+
+        strcat(theme.path, BGLGreen);
+        strcat(theme.path, FGBlack);
+
+        strcat(theme.air, BGWhite);
+        strcat(theme.air, FGBlack);
+
+        strcat(theme.screen, BGLGray);
+        strcat(theme.screen, FGBlue);
+    }
+    theme.wall[strlen(theme.wall)] = '\0';
+    theme.player[strlen(theme.player)] = '\0';
+    theme.block[strlen(theme.block)] = '\0';
+    theme.path[strlen(theme.path)] = '\0';
+    theme.air[strlen(theme.air)] = '\0';
+    theme.screen[strlen(theme.screen)] = '\0';
+    return theme;
 }

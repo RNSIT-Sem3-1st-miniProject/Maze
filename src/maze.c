@@ -160,14 +160,15 @@ char* possiblePossitionsToDig(Maze* maze, Point point){
 void printMaze(Maze* maze){
     int x, y;
     Point point;
+    int index = 0;
     for (y = 0; y < maze->height; y++){
         point.y = y;
         for (x = 0; x < maze->width; x++){
             point.x = x;
-            if(isDebugOn() && false){
-                printPoint(&point);
-            }
-            printf("%c", maze->board[get1dIndex(maze, point)]);
+            index = get1dIndex(maze, point);
+            SETCOLOR(maze->board[index]);
+            printf("%c", maze->board[index]);
+            SETCOLOR(BACKGROUND);
         }
         printf("\n");
     }
