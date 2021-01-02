@@ -125,36 +125,40 @@ void RESETCOLOR(){
 
 Theme constructTheme(int themeIndex){
     Theme theme;
-    theme.wall[0] = ' ';
-    theme.player[0] = ' ';
-    theme.block[0] = ' ';
-    theme.path[0] = ' ';
-    theme.air[0] = ' ';
-    theme.screen[0] = ' ';
     if(themeIndex == defaultTheme){
-        strcat(theme.wall, BGBlack);
-        strcat(theme.wall, FGRed);
-
-        strcat(theme.player, BGTeal);
-        strcat(theme.player, FGBlack);
-
-        strcat(theme.block, BGBlack);
-        strcat(theme.block, FGBlue);
-
-        strcat(theme.path, BGLGreen);
-        strcat(theme.path, FGBlack);
-
-        strcat(theme.air, BGWhite);
-        strcat(theme.air, FGBlack);
-
-        strcat(theme.screen, BGLGray);
-        strcat(theme.screen, FGBlue);
+        theme.wall = jstr(BGBlack, FGRed, STRBUFFER, '\0');
+        theme.player = jstr(BGTeal, FGBlack, STRBUFFER, '\0');
+        theme.block = jstr(BGBlack, FGBlue, STRBUFFER, '\0');
+        theme.path = jstr(BGLGreen, FGBlack, STRBUFFER, '\0');
+        theme.air = jstr(BGWhite, FGBlack, STRBUFFER, '\0');
+        theme.screen = jstr(BGLGray, FGBlue, STRBUFFER, '\0');
     }
-    theme.wall[strlen(theme.wall)] = '\0';
-    theme.player[strlen(theme.player)] = '\0';
-    theme.block[strlen(theme.block)] = '\0';
-    theme.path[strlen(theme.path)] = '\0';
-    theme.air[strlen(theme.air)] = '\0';
-    theme.screen[strlen(theme.screen)] = '\0';
     return theme;
+}
+
+char* jstr(char* str1, char* str2, int strBuffer, char endChar){
+    int len1 = strlen(str1), len2 = strlen(str2);
+    int i, strIndex = 0;
+    if (strBuffer <= (len1 + len2)){
+        return NULL;
+    }
+    char* str = (char*) malloc(sizeof(strBuffer));
+    for (i = 0; i < len1; (i++, strIndex++)){
+        str[strIndex] = str1[i];
+    }
+    for (i = 0; i < len2; (i++, strIndex++)){
+        str[strIndex] = str2[i];
+    }
+    str[strIndex] = endChar;
+    return str;
+}
+
+void disloveTheme(Theme theme){
+    free(theme.wall);
+    free(theme.player);
+    free(theme.block);
+    free(theme.block);
+    free(theme.path);
+    free(theme.air);
+    free(theme.screen);
 }

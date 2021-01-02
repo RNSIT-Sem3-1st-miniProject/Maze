@@ -3,13 +3,13 @@
 
 PROJECT_STATE state = {false};
 
-Theme themeSet[3];
+Theme theme;
 int themeIndex = defaultTheme;
 
 int main(){
     CLS();
 
-    themeSet[defaultTheme] = constructTheme(defaultTheme);
+    theme = constructTheme(defaultTheme);
 
     SETCOLOR(BACKGROUND);
     Game game = gameInit();
@@ -80,8 +80,13 @@ bool isDebugOn(){
     return state.DEBUG;
 }
 
-Theme getTheme(int themeIndex){
-    return themeSet[themeIndex];
+Theme getTheme(int tIndex){
+    if (themeIndex != tIndex){
+        themeIndex = tIndex;
+        disloveTheme(theme);
+        theme = constructTheme(themeIndex);
+    }
+    return theme;
 }
 
 int getSelectedThemeIndex(){

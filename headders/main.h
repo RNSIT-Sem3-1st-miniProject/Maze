@@ -45,8 +45,8 @@ int getRandomNumber(int max);
 #define FGRed "\033[31m"
 #define BGGreen "\033[32m"
 #define FGGreen "\033[42m"
-#define BGBlue "\033[34m"
-#define FGBlue "\033[44m"
+#define BGBlue "\033[44m"
+#define FGBlue "\033[34m"
 #define BGMegenta "\033[35m"
 #define FGMegenta "\033[45m"
 #define BGLGray "\033[47m"
@@ -57,14 +57,18 @@ int getRandomNumber(int max);
 
 #define defaultTheme 0
 
+#define STRBUFFER 15
+
 typedef struct theme{
-    char wall[20], player[20], block[20], path[20], air[20], screen[20];
+    char *wall, *player, *block, *path, *air, *screen;
 }Theme;
 
 int getSelectedThemeIndex();
 Theme getTheme(int themeIndex);
 Theme constructTheme(int themeIndex);
+void disloveTheme(Theme theme);
 
+char* jstr(char* str1, char* str2, int strBuffer, char endChar);
 void PAUSE(float sec);
 void CLS();
 void SETCOLOR(char preSetColor);
