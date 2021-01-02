@@ -96,7 +96,7 @@ void reflectSolution(Maze* maze, LL* ll){
 
 void SETCOLOR(char preSetColor){
     Theme theme = getTheme(getSelectedThemeIndex());
-    if ((COMPILE_MECHINE == WINDOWS) and false){
+    if ((COMPILE_MECHINE == WINDOWS) && false){
         system("color 71");
     }else{
         if(preSetColor == WALL){
