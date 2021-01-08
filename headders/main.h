@@ -19,6 +19,7 @@
 #define END '}'
 #define PATH '.'
 #define PLAYER 'O'
+#define BACKGROUND '\0'
 
 #define GAME_QUIT 1
 #define LEVEL_PASS 100
@@ -36,9 +37,41 @@ bool isDebugOn();
 void setSeed(unsigned int seed);
 int getRandomNumber(int max);
 
+#define BGReset "\033[39m"
+#define FGReset "\033[49m"
+
+#define BGBlack "\033[40m"
+#define FGBlack "\033[30m"
+#define FGRed "\033[31m"
+#define BGGreen "\033[32m"
+#define FGGreen "\033[42m"
+#define BGBlue "\033[44m"
+#define FGBlue "\033[34m"
+#define BGMegenta "\033[35m"
+#define FGMegenta "\033[45m"
+#define BGLGray "\033[47m"
+
+#define BGLGreen "\033[102m"
+#define BGTeal "\033[106m"
+#define BGWhite "\033[107m"
+
+#define defaultTheme 0
+
+#define STRBUFFER 15
+
+typedef struct theme{
+    char *wall, *player, *block, *path, *air, *screen;
+}Theme;
+
+int getSelectedThemeIndex();
+Theme getTheme(int themeIndex);
+Theme constructTheme(int themeIndex);
+void disloveTheme(Theme theme);
+
+char* jstr(char* str1, char* str2, int strBuffer, char endChar);
 void PAUSE(float sec);
 void CLS();
-void SETCOLOR();
+void SETCOLOR(char preSetColor);
 void RESETCOLOR();
 
 typedef struct Point{

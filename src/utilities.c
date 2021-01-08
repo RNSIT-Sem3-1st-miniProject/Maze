@@ -94,11 +94,24 @@ void reflectSolution(Maze* maze, LL* ll){
     }
 }
 
-void SETCOLOR(){
-    if (COMPILE_MECHINE == WINDOWS){
+void SETCOLOR(char preSetColor){
+    Theme theme = getTheme(getSelectedThemeIndex());
+    if ((COMPILE_MECHINE == WINDOWS) && false){
         system("color 71");
     }else{
-        printf("\033[34m\033[47m");
+        if(preSetColor == WALL){
+            printf("%s", theme.wall);
+        }else if(preSetColor == AIR){
+            printf("%s", theme.air);
+        }else if(preSetColor == PATH){
+            printf("%s", theme.path);
+        }else if(preSetColor == PLAYER){
+            printf("%s", theme.player);
+        }else if(preSetColor == BLOCK){
+            printf("%s", theme.block);
+        }else{
+            printf("%s", theme.screen);
+        }
     }
 }
 
@@ -108,4 +121,44 @@ void RESETCOLOR(){
     }else{
         printf("\033[94m\033[49m");
     }
+}
+
+Theme constructTheme(int themeIndex){
+    Theme theme;
+    if(themeIndex == defaultTheme){
+        theme.wall = jstr(BGBlack, FGRed, STRBUFFER, '\0');
+        theme.player = jstr(BGTeal, FGBlack, STRBUFFER, '\0');
+        theme.block = jstr(BGBlack, FGBlue, STRBUFFER, '\0');
+        theme.path = jstr(BGLGreen, FGBlack, STRBUFFER, '\0');
+        theme.air = jstr(BGWhite, FGBlack, STRBUFFER, '\0');
+        theme.screen = jstr(BGLGray, FGBlue, STRBUFFER, '\0');
+    }
+    return theme;
+}
+
+char* jstr(char* str1, char* str2, int strBuffer, char endChar){
+    int len1 = strlen(str1), len2 = strlen(str2);
+    int i, strIndex = 0;
+    if (strBuffer <= (len1 + len2)){
+        return NULL;
+    }
+    char* str = (char*) malloc(sizeof(strBuffer));
+    for (i = 0; i < len1; (i++, strIndex++)){
+        str[strIndex] = str1[i];
+    }
+    for (i = 0; i < len2; (i++, strIndex++)){
+        str[strIndex] = str2[i];
+    }
+    str[strIndex] = endChar;
+    return str;
+}
+
+void disloveTheme(Theme theme){
+    free(theme.wall);
+    free(theme.player);
+    free(theme.block);
+    free(theme.block);
+    free(theme.path);
+    free(theme.air);
+    free(theme.screen);
 }
