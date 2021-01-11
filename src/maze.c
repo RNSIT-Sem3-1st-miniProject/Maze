@@ -166,8 +166,14 @@ void printMaze(Maze* maze){
         for (x = 0; x < maze->width; x++){
             point.x = x;
             index = get1dIndex(maze, point);
-            SETCOLOR(maze->board[index]);
+            if(COMPILE_MECHINE == LINUX)
+            {
+                SETCOLOR(maze->board[index]);
+            }
             printf("%c", maze->board[index]);
+        }
+        if(COMPILE_MECHINE == LINUX)
+        {
             SETCOLOR(BACKGROUND);
         }
         printf("\n");
