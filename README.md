@@ -32,7 +32,7 @@ and for compiling this is how you do it :
 
 for compiling for windows the #define COMPILE_MECHINE is set to WINDOWS, and the line number 9 in main.h file is comented
 and for compiling this is how you do it : 
-    "gcc gcc main.c maze.c utilities.c LinkedList.c Game.c solution.c playerIN.c -o ..\\maze.exe"
+    gcc gcc main.c maze.c utilities.c LinkedList.c Game.c solution.c playerIN.c -o ..\\\maze.exe
 
 # Contributers
 
