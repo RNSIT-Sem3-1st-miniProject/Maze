@@ -4,7 +4,8 @@
 
 This is the MAZE project written by 3 RNSIT collage students, it runs in terminal/command prompt
 it is a single player game, to win the game you have to solve 9 randomly generated maze,
-the player can travel in the maze using WASD keys to go up : W, right : A, down : S, and left : D. 
+the player can travel in the maze using WASD keys to go up : W, right : A, down : S, and left : D.
+if the player wants to quit then he can quit by pressing Q.
 
 HAVE FUN PLAYING THE MAZE GAME...!
 
@@ -32,10 +33,10 @@ and for compiling this is how you do it :
 
 for compiling for windows the #define COMPILE_MECHINE is set to WINDOWS, and the line number 9 in main.h file is comented
 and for compiling this is how you do it : 
-    gcc gcc main.c maze.c utilities.c LinkedList.c Game.c solution.c playerIN.c -o ..\\\maze.exe
+    "gcc gcc main.c maze.c utilities.c LinkedList.c Game.c solution.c playerIN.c -o ..\\\maze.exe"
 
 # Contributers
 
-Vasu.Subbannavar    1RN19IS173
-Suprith.S   1RN19IS
-Yesh.S  1RN19IS
+Vasu.S    1RN19IS173
+Suprith.S   1RN19IS161
+Yash.S  1RN19IS186
